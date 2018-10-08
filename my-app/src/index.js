@@ -38,6 +38,7 @@ class Board extends React.Component {
         <div>{rows}</div>
     );
   }
+
   /* // Hard coding the board - deprecated //
   <div>
     <div className="board-row">
@@ -67,6 +68,7 @@ class Game extends React.Component {
         squares: Array(9).fill(null),
         selected: null,
       }],
+      isAscending: true,
       stepNumber: 0,
       xIsNext: true,
     };
@@ -94,6 +96,12 @@ class Game extends React.Component {
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
+    });
+  }
+
+  sortReversed() {
+    this.setState({
+      isAscending: !this.state.isAscending,
     });
   }
 
@@ -134,7 +142,12 @@ class Game extends React.Component {
           </div>
           <div className="game-info">
             <div>{status}</div>
-            <ol>{moves}</ol>
+            <div>
+              <button onClick={() => this.sortReversed()}>
+                {this.state.isAscending ? 'Sort in descending order' : 'Sort in ascending order'}
+              </button>
+            </div>
+            {this.state.isAscending ? <ol>{moves}</ol> : <ol>{moves.reverse()}</ol>}
           </div>
         </div>
     );
